@@ -1,0 +1,846 @@
+{
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "username",
+          "dataType": "VARCHAR(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "email",
+          "dataType": "VARCHAR(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "password_hash",
+          "dataType": "VARCHAR(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "first_name",
+          "dataType": "VARCHAR(50)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "last_name",
+          "dataType": "VARCHAR(50)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "is_active",
+          "dataType": "BOOLEAN",
+          "nullable": true,
+          "defaultValue": "TRUE",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "roles",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "TEXT",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "user_roles",
+      "columns": [
+        {
+          "name": "user_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "role_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "assigned_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": [
+        {
+          "type": "PRIMARY KEY",
+          "name": "PK_user_roles",
+          "columns": [
+            "user_id",
+            "role_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "slug",
+          "dataType": "VARCHAR(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "TEXT",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "parent_id",
+          "dataType": "INTEGER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_categories_parent",
+          "columns": [
+            {
+              "name": "parent_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "products",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "slug",
+          "dataType": "VARCHAR(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "TEXT",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "price",
+          "dataType": "DECIMAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "stock_quantity",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": 0,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "category_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_by",
+          "dataType": "INTEGER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_products_category",
+          "columns": [
+            {
+              "name": "category_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_products_created_by",
+          "columns": [
+            {
+              "name": "created_by",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "tags",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "product_tags",
+      "columns": [
+        {
+          "name": "product_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "tag_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": [
+        {
+          "type": "PRIMARY KEY",
+          "name": "PK_product_tags",
+          "columns": [
+            "product_id",
+            "tag_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "user_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "status",
+          "dataType": "VARCHAR(20)",
+          "nullable": false,
+          "defaultValue": "pending",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "shipping_address",
+          "dataType": "TEXT",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "billing_address",
+          "dataType": "TEXT",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "total_amount",
+          "dataType": "DECIMAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_orders_user",
+          "columns": [
+            {
+              "name": "user_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_orders_status",
+          "columns": [
+            {
+              "name": "status",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "CHECK",
+          "name": "status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "order_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "product_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "quantity",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "price_per_unit",
+          "dataType": "DECIMAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_order_items_order",
+          "columns": [
+            {
+              "name": "order_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_order_items_product",
+          "columns": [
+            {
+              "name": "product_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "CHECK",
+          "name": "quantity > 0",
+          "expression": "quantity > 0"
+        }
+      ]
+    },
+    {
+      "name": "product_reviews",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "product_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "user_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "rating",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "review_text",
+          "dataType": "TEXT",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "UQ_product_reviews_productiduserid",
+          "columns": [
+            {
+              "name": "product_id"
+            },
+            {
+              "name": "user_id"
+            }
+          ],
+          "unique": true
+        },
+        {
+          "name": "idx_product_reviews_product",
+          "columns": [
+            {
+              "name": "product_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_product_reviews_user",
+          "columns": [
+            {
+              "name": "user_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "CHECK",
+          "name": "rating BETWEEN 1 AND 5",
+          "expression": "rating BETWEEN 1 AND 5"
+        }
+      ]
+    },
+    {
+      "name": "order_status_history",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "SERIAL",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "order_id",
+          "dataType": "INTEGER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "old_status",
+          "dataType": "VARCHAR(20)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "new_status",
+          "dataType": "VARCHAR(20)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "comment",
+          "dataType": "TEXT",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": false,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_order_status_history_order",
+          "columns": [
+            {
+              "name": "order_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "CHECK",
+          "name": "old_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "old_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        },
+        {
+          "type": "CHECK",
+          "name": "new_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "new_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "name": "product_details",
+      "definition": "SELECT \r\n  p.id, \r\n  p.name, \r\n  p.description, \r\n  p.price, \r\n  p.stock_quantity, \r\n  c.name AS cate",
+      "sourceTables": []
+    },
+    {
+      "name": "product_inventory",
+      "definition": "SELECT \r\n  p.id,\r\n  p.name,\r\n  p.stock_quantity,\r\n  get_stock_status(p.stock_quantity) AS stock_status\r\nFROM products p",
+      "sourceTables": [
+        "products"
+      ]
+    }
+  ],
+  "storedProcedures": [
+    {
+      "name": "get_user_orders",
+      "parameters": [
+        {
+          "name": "user_id_param",
+          "dataType": "INTEGER",
+          "direction": "IN"
+        }
+      ],
+      "body": "LANGUAGE plpgsql\r\nAS $$\r\nBEGIN\r\n  SELECT o.id, o.status, o.total_amount, o.created_at,\r\n         oi.product_id, p.name as product_name, oi.quantity, oi.price_per_unit\r\n  FROM orders o\r\n  JOIN order_items oi ON o.id = oi.order_id\r\n  JOIN products p ON oi.product_id = p.id\r\n  WHERE o.user_id = user_id_param\r\n  ORDER BY o.created_at DESC",
+      "affectedTables": [
+        "orders",
+        "order_items",
+        "products"
+      ]
+    },
+    {
+      "name": "update_product_stock",
+      "parameters": [
+        {
+          "name": "product_id_param",
+          "dataType": "INTEGER",
+          "direction": "IN"
+        },
+        {
+          "name": "new_quantity",
+          "dataType": "INTEGER",
+          "direction": "IN"
+        }
+      ],
+      "body": "LANGUAGE plpgsql\r\nAS $$\r\nBEGIN\r\n  UPDATE products\r\n  SET stock_quantity = new_quantity,\r\n      updated_at = NOW()\r\n  WHERE id = product_id_param",
+      "affectedTables": [
+        "products"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "get_stock_status",
+      "parameters": [
+        {
+          "name": "stock",
+          "dataType": "INTEGER",
+          "direction": "IN"
+        }
+      ],
+      "returnType": "VARCHAR(20)",
+      "body": "$$\r\nDECLARE\r\n  status VARCHAR(20)",
+      "affectedTables": []
+    },
+    {
+      "name": "track_order_status_changes",
+      "parameters": [],
+      "returnType": "TRIGGER",
+      "body": "$$\r\nBEGIN\r\n  IF NEW.status != OLD.status THEN\r\n    INSERT INTO order_status_history (order_id, old_status, new_status, updated_at)\r\n    VALUES (NEW.id, OLD.status, NEW.status, NOW())",
+      "affectedTables": [
+        "order_status_history"
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "name": "trg_order_status_updated",
+      "table": "orders",
+      "timing": "AFTER",
+      "events": [
+        "UPDATE"
+      ],
+      "body": "FOR EACH ROW\r\nEXECUTE FUNCTION track_order_status_changes()",
+      "affectedTables": []
+    }
+  ],
+  "relationships": []
+}
