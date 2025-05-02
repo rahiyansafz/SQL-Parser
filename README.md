@@ -14,8 +14,11 @@ AI-DB_Analyzer is designed to parse SQL dump files from various database systems
 - **MongoDB Support**: Also handles MongoDB schema extraction from BSON/JSON files
 - **Intelligent Parsing**: Uses regex-based parsing with fallback mechanisms for robust extraction
 - **JSON Output**: Generates structured JSON schema descriptions for easy consumption
+- **Docker Support**: Can run in containerized environments for consistent execution
 
 ## Installation
+
+### Standard Installation
 
 ```bash
 # Clone the repository
@@ -24,6 +27,20 @@ cd AI-DB_Analyzer
 
 # Install dependencies
 npm install
+```
+
+### Docker Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Techjays/AI-DB_Analyzer.git
+cd AI-DB_Analyzer
+
+# Build the Docker image
+docker build -t ai-db-analyzer .
+
+# Or using npm script
+npm run docker:build
 ```
 
 ## Usage
@@ -38,6 +55,36 @@ npm start
 ```
 
 This will process all SQL files and generate corresponding JSON schema files in the `schema_results/` directory.
+
+### Running with Docker
+
+```bash
+# Run with Docker directly
+docker run -v "./sql_files:/app/sql_files" -v "./schema_results:/app/schema_results" ai-db-analyzer
+
+# Or using npm script
+npm run docker:start
+```
+
+### Running with Docker Compose
+
+Docker Compose allows you to run the application along with database services for live connections:
+
+```bash
+# Start the application (and optionally database services)
+docker-compose up
+
+# Or using npm script
+npm run docker:compose
+
+# To rebuild and start
+npm run docker:compose:build
+
+# To stop all services
+npm run docker:compose:down
+```
+
+To enable live database connections with Docker Compose, uncomment the desired database services in the `docker-compose.yml` file.
 
 ### Customizing the process
 
@@ -68,6 +115,19 @@ const schema = await schemaExtractor.extractSchemaFromConnection({
 });
 ```
 
+When using Docker Compose, you can connect to the included database services using their service names as hostnames:
+
+```javascript
+const schema = await schemaExtractor.extractSchemaFromConnection({
+    type: 'mysql',
+    host: 'mysql',  // Use the service name from docker-compose.yml
+    port: 3306,
+    database: 'sampledb',
+    username: 'root',
+    password: 'rootpassword'
+});
+```
+
 ## Schema Structure
 
 The generated schema JSON files contain detailed information about:
@@ -91,6 +151,8 @@ AI-DB_Analyzer/
 ├── index.js                  # Main entry point
 ├── schema_parser_service.js  # Core schema extraction logic
 ├── package.json              # Node.js dependencies
+├── Dockerfile                # Docker configuration
+├── docker-compose.yml        # Docker Compose configuration
 │
 ├── sql_files/                # Directory for SQL dump files
 │   ├── mssql_dump.sql
@@ -113,6 +175,7 @@ AI-DB_Analyzer/
   - mysql2
   - node-sql-parser
   - pg
+- Docker and Docker Compose (for containerized execution)
 
 ## License
 

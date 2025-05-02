@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: ai-db-analyzer
+    volumes:
+      - ./sql_files:/app/sql_files
+      - ./schema_results:/app/schema_results
+    environment:
+      - NODE_ENV=production
+    networks:
+      - db-analyzer-network
+
+  # Example database services for live schema extraction
+  # Uncomment as needed
+  
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: mysql-db
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpassword
+  #     MYSQL_DATABASE: sampledb
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - db-analyzer-network
+  
+  # postgres:
+  #   image: postgres:16
+  #   container_name: postgres-db
+  #   environment:
+  #     POSTGRES_PASSWORD: postgrespassword
+  #     POSTGRES_DB: sampledb
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - db-analyzer-network
+  
+  # mongodb:
+  #   image: mongo:6
+  #   container_name: mongo-db
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: mongopassword
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   networks:
+  #     - db-analyzer-network
+
+networks:
+  db-analyzer-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  postgres-data:
+  mongo-data:
