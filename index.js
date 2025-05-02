@@ -19,7 +19,8 @@ async function parseAllSchemas() {
         { file: './sql_files/postgres_dump.sql', type: 'postgres' },
         { file: './sql_files/sqlite_dump.sql', type: 'sqlite' },
         { file: './sql_files/mssql_dump.sql', type: 'mssql' },
-        { file: './sql_files/mysql_dump.sql', type: 'mysql' }
+        { file: './sql_files/mysql_dump.sql', type: 'mysql' },
+        { file: './sql_files/oracle_dump.sql', type: 'oracle' }
     ];
 
     for (const dialect of dialects) {

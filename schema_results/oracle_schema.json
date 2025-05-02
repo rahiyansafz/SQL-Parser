@@ -1,0 +1,1199 @@
+{
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "username",
+          "dataType": "VARCHAR2(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "email",
+          "dataType": "VARCHAR2(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "password_hash",
+          "dataType": "VARCHAR2(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "first_name",
+          "dataType": "VARCHAR2(50)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "last_name",
+          "dataType": "VARCHAR2(50)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "is_active",
+          "dataType": "NUMBER(1)",
+          "nullable": true,
+          "defaultValue": 1,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "roles",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR2(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "CLOB",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "user_roles",
+      "columns": [
+        {
+          "name": "user_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "role_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "assigned_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_user_roles_user",
+          "columns": [
+            {
+              "name": "user_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_user_roles_role",
+          "columns": [
+            {
+              "name": "role_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "PRIMARY KEY",
+          "name": "PK_user_roles",
+          "columns": [
+            "user_id",
+            "role_id"
+          ]
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_user_roles_users",
+          "columns": [
+            "user_id"
+          ],
+          "references": {
+            "table": "users",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_user_roles_roles",
+          "columns": [
+            "role_id"
+          ],
+          "references": {
+            "table": "roles",
+            "columns": [
+              "id"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR2(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "slug",
+          "dataType": "VARCHAR2(100)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "CLOB",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "parent_id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_categories_parent",
+          "columns": [
+            {
+              "name": "parent_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_categories_categories",
+          "columns": [
+            "parent_id"
+          ],
+          "references": {
+            "table": "categories",
+            "columns": [
+              "id"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR2(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "slug",
+          "dataType": "VARCHAR2(255)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "description",
+          "dataType": "CLOB",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "price",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "stock_quantity",
+          "dataType": "NUMBER(11)",
+          "nullable": false,
+          "defaultValue": 0,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "category_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_by",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_products_category",
+          "columns": [
+            {
+              "name": "category_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_products_created_by",
+          "columns": [
+            {
+              "name": "created_by",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_products_categories",
+          "columns": [
+            "category_id"
+          ],
+          "references": {
+            "table": "categories",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_products_users",
+          "columns": [
+            "created_by"
+          ],
+          "references": {
+            "table": "users",
+            "columns": [
+              "id"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "name",
+          "dataType": "VARCHAR2(50)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [],
+      "constraints": []
+    },
+    {
+      "name": "product_tags",
+      "columns": [
+        {
+          "name": "product_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "tag_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_product_tags_tag",
+          "columns": [
+            {
+              "name": "tag_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "PRIMARY KEY",
+          "name": "PK_product_tags",
+          "columns": [
+            "product_id",
+            "tag_id"
+          ]
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_product_tags_products",
+          "columns": [
+            "product_id"
+          ],
+          "references": {
+            "table": "products",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_product_tags_tags",
+          "columns": [
+            "tag_id"
+          ],
+          "references": {
+            "table": "tags",
+            "columns": [
+              "id"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "user_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "status",
+          "dataType": "VARCHAR2(20)",
+          "nullable": false,
+          "defaultValue": "pending",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "shipping_address",
+          "dataType": "CLOB",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "billing_address",
+          "dataType": "CLOB",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "total_amount",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_orders_user",
+          "columns": [
+            {
+              "name": "user_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_orders_status",
+          "columns": [
+            {
+              "name": "status",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_orders_users",
+          "columns": [
+            "user_id"
+          ],
+          "references": {
+            "table": "users",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "CHECK",
+          "name": "ck_orders_status",
+          "expression": "status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        },
+        {
+          "type": "CHECK",
+          "name": "status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "order_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "product_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "quantity",
+          "dataType": "NUMBER(11)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "price_per_unit",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_order_items_order",
+          "columns": [
+            {
+              "name": "order_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_order_items_product",
+          "columns": [
+            {
+              "name": "product_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_order_items_orders",
+          "columns": [
+            "order_id"
+          ],
+          "references": {
+            "table": "orders",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_order_items_products",
+          "columns": [
+            "product_id"
+          ],
+          "references": {
+            "table": "products",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "CHECK",
+          "name": "ck_oi_quantity",
+          "expression": "quantity > 0"
+        },
+        {
+          "type": "CHECK",
+          "name": "quantity > 0",
+          "expression": "quantity > 0"
+        }
+      ]
+    },
+    {
+      "name": "product_reviews",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "product_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "user_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "rating",
+          "dataType": "NUMBER(1)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "review_text",
+          "dataType": "CLOB",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "created_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_product_reviews_product",
+          "columns": [
+            {
+              "name": "product_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        },
+        {
+          "name": "idx_product_reviews_user",
+          "columns": [
+            {
+              "name": "user_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_product_reviews_products",
+          "columns": [
+            "product_id"
+          ],
+          "references": {
+            "table": "products",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_product_reviews_users",
+          "columns": [
+            "user_id"
+          ],
+          "references": {
+            "table": "users",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "CHECK",
+          "name": "ck_pr_rating",
+          "expression": "rating BETWEEN 1 AND 5"
+        },
+        {
+          "type": "CHECK",
+          "name": "rating BETWEEN 1 AND 5",
+          "expression": "rating BETWEEN 1 AND 5"
+        }
+      ]
+    },
+    {
+      "name": "order_status_history",
+      "columns": [
+        {
+          "name": "id",
+          "dataType": "NUMBER",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": true,
+          "comment": ""
+        },
+        {
+          "name": "order_id",
+          "dataType": "NUMBER",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "old_status",
+          "dataType": "VARCHAR2(20)",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "new_status",
+          "dataType": "VARCHAR2(20)",
+          "nullable": false,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "comment",
+          "dataType": "CLOB",
+          "nullable": true,
+          "defaultValue": null,
+          "autoIncrement": false,
+          "comment": ""
+        },
+        {
+          "name": "updated_at",
+          "dataType": "TIMESTAMP",
+          "nullable": true,
+          "defaultValue": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "comment": ""
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_osh_order",
+          "columns": [
+            {
+              "name": "order_id",
+              "order": "ASC"
+            }
+          ],
+          "unique": false
+        }
+      ],
+      "constraints": [
+        {
+          "type": "FOREIGN KEY",
+          "name": "FK_order_status_history_orders",
+          "columns": [
+            "order_id"
+          ],
+          "references": {
+            "table": "orders",
+            "columns": [
+              "id"
+            ]
+          }
+        },
+        {
+          "type": "CHECK",
+          "name": "ck_osh_old_status",
+          "expression": "old_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        },
+        {
+          "type": "CHECK",
+          "name": "ck_osh_new_status",
+          "expression": "new_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        },
+        {
+          "type": "CHECK",
+          "name": "old_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "old_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        },
+        {
+          "type": "CHECK",
+          "name": "new_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'",
+          "expression": "new_status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'"
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "name": "product_details",
+      "definition": "SELECT \r\n  p.id, \r\n  p.name, \r\n  p.description, \r\n  p.price, \r\n  p.stock_quantity, \r\n  c.name AS cate",
+      "sourceTables": []
+    },
+    {
+      "name": "product_inventory",
+      "definition": "SELECT \r\n  p.id,\r\n  p.name,\r\n  p.stock_quantity,\r\n  get_stock_status(p.stock_quantity) AS stock_status\r\nFROM products p",
+      "sourceTables": [
+        "products"
+      ]
+    }
+  ],
+  "storedProcedures": [
+    {
+      "name": "get_user_orders",
+      "parameters": [
+        {
+          "name": "user_id_param",
+          "dataType": "IN NUMBER",
+          "direction": "IN"
+        }
+      ],
+      "body": "BEGIN\r\n  \r\n  FOR ord_rec IN (\r\n      SELECT o.id, o.status, o.total_amount, o.created_at,\r\n             oi.product_id, p.name as product_name, oi.quantity, oi.price_per_unit\r\n      FROM orders o\r\n      JOIN order_items oi ON o.id = oi.order_id\r\n      JOIN products p ON oi.product_id = p.id\r\n      WHERE o.user_id = user_id_param\r\n      ORDER BY o.created_at DESC\r\n  ) LOOP\r\n    \r\n    DBMS_OUTPUT.PUT_LINE('Order ID: ' || ord_rec.id)",
+      "affectedTables": [
+        "orders",
+        "order_items",
+        "products"
+      ]
+    },
+    {
+      "name": "update_product_stock",
+      "parameters": [
+        {
+          "name": "product_id_param",
+          "dataType": "IN NUMBER",
+          "direction": "IN"
+        },
+        {
+          "name": "new_quantity",
+          "dataType": "IN NUMBER",
+          "direction": "IN"
+        }
+      ],
+      "body": "BEGIN\r\n  UPDATE products\r\n  SET stock_quantity = new_quantity,\r\n      updated_at = CURRENT_TIMESTAMP\r\n  WHERE id = product_id_param",
+      "affectedTables": [
+        "products"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "get_stock_status",
+      "parameters": [
+        {
+          "name": "stock",
+          "dataType": "NUMBER",
+          "direction": "IN"
+        }
+      ],
+      "returnType": "VARCHAR2",
+      "body": "status VARCHAR2(20);\r\nBEGIN\r\n  IF stock = 0 THEN\r\n    status := 'Out of stock';\r\n  ELSIF stock < 10 THEN\r\n    status := 'Low stock';\r\n  ELSE\r\n    status := 'In stock';",
+      "affectedTables": []
+    }
+  ],
+  "triggers": [
+    {
+      "name": "trg_order_status_updated",
+      "table": "status",
+      "timing": "AFTER",
+      "events": [
+        "UPDATE"
+      ],
+      "body": "ON orders\r\nFOR EACH ROW\r\nBEGIN\r\n  IF :NEW.status != :OLD.status THEN\r\n    INSERT INTO order_status_history (order_id, old_status, new_status, updated_at)\r\n    VALUES (:NEW.id, :OLD.status, :NEW.status, CURRENT_TIMESTAMP)",
+      "affectedTables": [
+        "order_status_history"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "fromTable": "user_roles",
+      "fromColumns": [
+        "user_id"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_user_roles_users"
+    },
+    {
+      "fromTable": "user_roles",
+      "fromColumns": [
+        "role_id"
+      ],
+      "toTable": "roles",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_user_roles_roles"
+    },
+    {
+      "fromTable": "categories",
+      "fromColumns": [
+        "parent_id"
+      ],
+      "toTable": "categories",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_categories_categories"
+    },
+    {
+      "fromTable": "products",
+      "fromColumns": [
+        "category_id"
+      ],
+      "toTable": "categories",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_products_categories"
+    },
+    {
+      "fromTable": "products",
+      "fromColumns": [
+        "created_by"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_products_users"
+    },
+    {
+      "fromTable": "product_tags",
+      "fromColumns": [
+        "product_id"
+      ],
+      "toTable": "products",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_product_tags_products"
+    },
+    {
+      "fromTable": "product_tags",
+      "fromColumns": [
+        "tag_id"
+      ],
+      "toTable": "tags",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_product_tags_tags"
+    },
+    {
+      "fromTable": "orders",
+      "fromColumns": [
+        "user_id"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_orders_users"
+    },
+    {
+      "fromTable": "order_items",
+      "fromColumns": [
+        "order_id"
+      ],
+      "toTable": "orders",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_order_items_orders"
+    },
+    {
+      "fromTable": "order_items",
+      "fromColumns": [
+        "product_id"
+      ],
+      "toTable": "products",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_order_items_products"
+    },
+    {
+      "fromTable": "product_reviews",
+      "fromColumns": [
+        "product_id"
+      ],
+      "toTable": "products",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_product_reviews_products"
+    },
+    {
+      "fromTable": "product_reviews",
+      "fromColumns": [
+        "user_id"
+      ],
+      "toTable": "users",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_product_reviews_users"
+    },
+    {
+      "fromTable": "order_status_history",
+      "fromColumns": [
+        "order_id"
+      ],
+      "toTable": "orders",
+      "toColumns": [
+        "id"
+      ],
+      "name": "FK_order_status_history_orders"
+    }
+  ]
+}

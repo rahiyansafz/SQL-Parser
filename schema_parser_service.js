@@ -603,10 +603,9 @@ class SchemaExtractionService {
     extractFunctionsGeneric(content, schema) {
         const funcPatterns = [
             /CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+(?:`|\[|")?(\w+)(?:`|\]|")?\s*(?:\(([\s\S]*?)\))?\s*RETURNS\s+(\w+(?:\([^)]+\))?)\s*(?:AS|IS|BEGIN)?\s*([\s\S]*?)(?:END;|END|GO|\/|;|$)/gi,
-
             /CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+(?:`|\[|")?(\w+)(?:`|\]|")?\s*(?:\(([\s\S]*?)\))?\s*RETURNS\s+(\w+(?:\([^)]+\))?)\s*(?:LANGUAGE\s+\w+)?\s*(?:AS\s*[$][$]|IS|BEGIN)([\s\S]*?)(?:[$][$]|END;|END|GO|\/|;|$)/gi,
-
-            /CREATE\s+(?:DEFINER\s*=\s*[^\s]+\s+)?FUNCTION\s+(?:`|\[|")?(\w+)(?:`|\]|")?\s*\(([\s\S]*?)\)\s*RETURNS\s+(\w+(?:\([^)]+\))?)([\s\S]*?)(?:END|DELIMITER\s*;)/gi
+            /CREATE\s+(?:DEFINER\s*=\s*[^\s]+\s+)?FUNCTION\s+(?:`|\[|")?(\w+)(?:`|\]|")?\s*\(([\s\S]*?)\)\s*RETURNS\s+(\w+(?:\([^)]+\))?)([\s\S]*?)(?:END|DELIMITER\s*;)/gi,
+            /CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+(?:`|\[|")?(\w+)(?:`|\]|")?\s*(?:\(([\s\S]*?)\))?\s*RETURN\s+(\w+(?:\([^)]+\))?)\s*(?:IS|AS)\s*([\s\S]*?)(?:END;|END|\/)/gi
         ];
 
         for (const pattern of funcPatterns) {
